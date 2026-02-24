@@ -2,7 +2,7 @@
 export interface User {
   id: number;
   email: string;
-  password: string; // Только для демонстрации! В реальном проекте так нельзя
+  password: string;
   role: 'admin' | 'manager' | 'user'; // Union тип
   profile?: {
     // Опциональное поле

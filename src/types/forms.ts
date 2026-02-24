@@ -29,14 +29,6 @@ export type ValidationErrors<T> = {
   [K in keyof T]?: string;
 };
 
-// Тема: keyof - получаем ключи объекта
-export function getFieldError<T>(
-  errors: ValidationErrors<T>,
-  field: keyof T,
-): string | undefined {
-  return errors[field];
-}
-
 // Тема: Базовый тип для форм
 export type FormValues = Record<string, unknown>;
 
