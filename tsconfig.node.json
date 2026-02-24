@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "outDir": "dist",  // Добавьте выходную директорию
+    "rootDir": ".",    // Корневая директория
+    "emitDeclarationOnly": false,  // Генерируем не только декларации
+    "noEmit": false    // ВАЖНО: меняем на false!
+  },
+  "include": ["vite.config.ts"]
+}
