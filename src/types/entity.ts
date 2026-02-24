@@ -5,6 +5,3 @@ export interface Entity {
   updatedAt?: Date;
   lastLogin?: Date; // Опциональное поле
 }
-
-// Тема: Generic для сущностей с id
-export type WithId<T> = T & { id: number };

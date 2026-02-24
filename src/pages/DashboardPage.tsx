@@ -7,6 +7,7 @@ export function DashboardPage() {
 
   // Тема: Type guard в действии
   if (isAdmin(user)) {
+    // Либо любая другая логика
     console.log(
       'Пользователь - администратор, показываем расширенную информацию',
     );
@@ -58,7 +59,7 @@ export function DashboardPage() {
         {isAdmin(user) && (
           <Section title='Управление пользователями'>
             <p>Вы можете управлять пользователями</p>
-            <div style={{display: 'flex', gap: '4px'}}>
+            <div style={{ display: 'flex', gap: '4px' }}>
               <button>Добавить пользователя</button>
               <button>Редактировать роли</button>
             </div>

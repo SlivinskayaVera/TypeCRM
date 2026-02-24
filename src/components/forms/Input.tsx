@@ -2,7 +2,7 @@ import React from 'react';
 
 interface InputProps {
   label: string;
-  field: string;  // Теперь просто string для пути
+  field: string;
   value: unknown;
   error?: string;
   type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'date';
@@ -12,7 +12,7 @@ interface InputProps {
   required?: boolean;
 }
 
-export function Input({ 
+export function Input({
   label,
   field,
   value,
@@ -21,36 +21,29 @@ export function Input({
   onChange,
   placeholder,
   disabled = false,
-  required = false
+  required = false,
 }: InputProps) {
-  
   const getInputValue = (val: unknown): string => {
     if (val === null || val === undefined) return '';
     if (val instanceof Date) return val.toISOString().split('T')[0];
     return String(val);
   };
 
-  // const parseValue = (inputValue: string): unknown => {
-  //   if (type === 'number') {
-  //     return inputValue === '' ? 0 : Number(inputValue);
-  //   }
-  //   if (type === 'date') {
-  //     return inputValue ? new Date(inputValue) : null;
-  //   }
-  //   return inputValue;
-  // };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      onChange(field, e.target.value);
+    onChange(field, e.target.value);
   };
 
   return (
     <div style={{ marginBottom: '1rem', opacity: disabled ? 0.6 : 1 }}>
-      <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500 }}>
+      <label
+        style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500 }}
+      >
         {label}
-        {required && <span style={{ color: 'red', marginLeft: '0.25rem' }}>*</span>}
+        {required && (
+          <span style={{ color: 'red', marginLeft: '0.25rem' }}>*</span>
+        )}
       </label>
-      
+
       <input
         type={type}
         value={getInputValue(value)}
@@ -64,12 +57,21 @@ export function Input({
           border: `1px solid ${error ? '#dc3545' : '#ced4da'}`,
           borderRadius: '4px',
           fontSize: '1rem',
-          ...(disabled && { backgroundColor: '#e9ecef', cursor: 'not-allowed' })
+          ...(disabled && {
+            backgroundColor: '#e9ecef',
+            cursor: 'not-allowed',
+          }),
         }}
       />
-      
+
       {error && (
-        <p style={{ color: '#dc3545', fontSize: '0.875rem', marginTop: '0.25rem' }}>
+        <p
+          style={{
+            color: '#dc3545',
+            fontSize: '0.875rem',
+            marginTop: '0.25rem',
+          }}
+        >
           {error}
         </p>
       )}

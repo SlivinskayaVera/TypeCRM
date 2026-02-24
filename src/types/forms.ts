@@ -20,7 +20,7 @@ export type FormRenderProps<T> = {
 export interface FormProps<T> {
   initialValues: T;
   onSubmit: (data: T) => Promise<void>;
-  validationSchema?: z.ZodSchema<T>; 
+  validationSchema?: z.ZodSchema<T>;
   children: ReactNode | ((props: FormRenderProps<T>) => ReactNode);
 }
 
@@ -34,17 +34,6 @@ export type FormValues = Record<string, unknown>;
 
 // Тема: Утилита для извлечения типа поля
 export type FieldType<T, K extends keyof T> = T[K] extends infer U ? U : never;
-
-// Тема: Type guard для проверки значения
-export function isFormValue(
-  value: unknown,
-): value is string | number | boolean {
-  return (
-    typeof value === 'string' ||
-    typeof value === 'number' ||
-    typeof value === 'boolean'
-  );
-}
 
 // Тема: Generics в интерфейсе
 export interface FormProps<T extends FormValues> {

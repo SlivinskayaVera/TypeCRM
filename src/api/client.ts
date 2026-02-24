@@ -23,14 +23,12 @@ export async function apiPost<T extends Entity>(
 ): Promise<T> {
   const items = await apiGet<T>(storageKey);
 
-  // Тема: Type assertion, но теперь безопаснее
+  // Тема: Type assertion
   const newItem = {
     ...data,
     id:
       customId ??
-      (items.length > 0
-        ? Math.max(...items.map((item) => item.id)) + 1 // Больше не нужно (i as any)
-        : 1),
+      (items.length > 0 ? Math.max(...items.map((item) => item.id)) + 1 : 1),
     createdAt: new Date(),
   } as T;
 

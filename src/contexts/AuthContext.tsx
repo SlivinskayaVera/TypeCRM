@@ -37,7 +37,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           const user = await authApi.getCurrentUser(storedUserId);
           if (user) {
             // Тема: Omit - исключаем пароль
-            const { password, ...publicUser } = user;
+            const { password, ...publicUser } = user; // eslint-disable-line @typescript-eslint/no-unused-vars
             setUser(publicUser);
           } else {
             setStoredUserId(null);
@@ -61,7 +61,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
         if (user) {
           // Тема: Omit - убираем пароль перед сохранением в state
-          const { password: _, ...publicUser } = user;
+          const { password: _, ...publicUser } = user; // eslint-disable-line @typescript-eslint/no-unused-vars
           setUser(publicUser);
           setStoredUserId(user.id);
         } else {
@@ -80,7 +80,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       try {
         const user = await authApi.register(data);
         // Тема: Omit - убираем пароль
-        const { password: _, ...publicUser } = user;
+        const { password: _, ...publicUser } = user; // eslint-disable-line @typescript-eslint/no-unused-vars
         setUser(publicUser);
         setStoredUserId(user.id);
       } finally {

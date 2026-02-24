@@ -5,14 +5,14 @@ export const initialUsers: User[] = [
   {
     id: 1,
     email: 'admin@example.com',
-    password: 'admin123', // В реальном проекте так нельзя!
+    password: 'admin123',
     role: 'admin',
     profile: {
       firstName: 'Админ',
       lastName: 'Системы',
       avatar: 'https://i.pravatar.cc/150?img=1',
     },
-    createdAt: new Date('2024-01-01'),
+    createdAt: new Date('2026-01-01'),
     lastLogin: new Date(),
   },
   {
@@ -24,7 +24,7 @@ export const initialUsers: User[] = [
       firstName: 'Менеджер',
       lastName: 'Проектов',
     },
-    createdAt: new Date('2024-01-15'),
+    createdAt: new Date('2026-01-15'),
   },
   {
     id: 3,
@@ -35,7 +35,7 @@ export const initialUsers: User[] = [
       firstName: 'Обычный',
       lastName: 'Пользователь',
     },
-    createdAt: new Date('2024-02-01'),
+    createdAt: new Date('2026-02-01'),
   },
 ];
 
