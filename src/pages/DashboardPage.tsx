@@ -58,8 +58,10 @@ export function DashboardPage() {
         {isAdmin(user) && (
           <Section title='Управление пользователями'>
             <p>Вы можете управлять пользователями</p>
-            <button>Добавить пользователя</button>
-            <button>Редактировать роли</button>
+            <div style={{display: 'flex', gap: '4px'}}>
+              <button>Добавить пользователя</button>
+              <button>Редактировать роли</button>
+            </div>
           </Section>
         )}
 
