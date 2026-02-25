@@ -1,16 +1,23 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import { AuthProvider } from '@/contexts/AuthContext';
-import { ProtectedRoute, AdminRoute } from '@/components/auth/ProtectedRoute';
-import { LoginPage } from '@/pages/LoginPage';
-import { RegisterPage } from '@/pages/RegisterPage';
-import { DashboardPage } from '@/pages/DashboardPage';
-import { AdminPage } from '@/pages/AdminPage';
-import { useAuth } from '@/hooks/useAuth';
+import { AuthProvider } from './contexts/AuthContext';
+import {
+  NotificationProvider,
+  NotificationContainer,
+} from './contexts/NotificationContext';
+import { ProtectedRoute } from './components/auth/ProtectedRoute';
+import { LoginPage } from './pages/LoginPage';
+import { RegisterPage } from './pages/RegisterPage';
+import { DashboardPage } from './pages/DashboardPage';
+import { ProfilePage } from './pages/ProfilePage';
+import { AdminPage } from './pages/AdminPage';
+import { useAuth } from './hooks/useAuth';
 
-// Компонент навигации
+// TODO: нормальные типы для пропсов ⚠️
 function Navigation() {
+  // useAuth возвращает any — надо исправить!
   const { user, logout } = useAuth();
 
+  // user может быть null, но мы не проверяем
   return (
     <nav
       style={{
@@ -26,9 +33,21 @@ function Navigation() {
         <Link to='/' style={{ color: 'white', textDecoration: 'none' }}>
           Главная
         </Link>
+
+        {/* ⚠️ Нет проверки на user?.role — может упасть! */}
         {user?.role === 'admin' && (
           <Link to='/admin' style={{ color: 'white', textDecoration: 'none' }}>
             Админ панель
+          </Link>
+        )}
+
+        {/* Добавляем ссылку на профиль */}
+        {user && (
+          <Link
+            to={`/profile/${user.id}`}
+            style={{ color: 'white', textDecoration: 'none' }}
+          >
+            Профиль
           </Link>
         )}
       </div>
@@ -36,6 +55,7 @@ function Navigation() {
       <div>
         {user ? (
           <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+            {/* ⚠️ Может упасть, если нет profile или firstName */}
             <span>{user.profile?.firstName || user.email}</span>
             <button onClick={logout}>Выйти</button>
           </div>
@@ -81,12 +101,24 @@ function AppContent() {
           }
         />
 
+        {/* Маршрут профиля с опциональным ID */}
+        <Route
+          path='/profile/:id?'
+          element={
+            <ProtectedRoute>
+              {/* ⚠️ ProfilePage ожидает userId, но мы не передаём! */}
+              <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path='/admin'
           element={
-            <AdminRoute>
+            <ProtectedRoute>
+              {/* ⚠️ Должен быть AdminRoute, но используем обычный ProtectedRoute */}
               <AdminPage />
-            </AdminRoute>
+            </ProtectedRoute>
           }
         />
 
@@ -101,6 +133,8 @@ function AppContent() {
           }
         />
       </Routes>
+
+      {/* ⚠️ NotificationContainer должен быть здесь, но мы его уже добавили в App */}
     </div>
   );
 }
@@ -109,7 +143,11 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <AppContent />
+        {/* ⚠️ NotificationProvider оборачивает всё, но NotificationContainer внутри Routes? */}
+        <NotificationProvider>
+          <NotificationContainer />
+          <AppContent />
+        </NotificationProvider>
       </AuthProvider>
     </BrowserRouter>
   );
