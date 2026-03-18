@@ -21,13 +21,7 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 }
 
 // Тема: Тип для значения формы
-export type FormValue =
-  | string
-  | number
-  | boolean
-  | Date
-  | null
-  | Record<string, unknown>;
+export type FormValue = string | number | boolean | Date | null;
 
 export function useForm<T extends FormValues>(
   initialValues: T,
@@ -93,8 +87,14 @@ export function useForm<T extends FormValues>(
 
         const rootObj = { ...prev } as Record<string, unknown>;
         const result = setNestedValue(rootObj, 0);
-
-        return result as T;
+        // Проверяем, что результат - валидный T
+        if (
+          isRecord(result) &&
+          Object.keys(result).every((key) => key in initialValues)
+        ) {
+          return result as T;
+        }
+        return prev; // если что-то пошло не так, возвращаем предыдущее значение
       });
     },
     [],
