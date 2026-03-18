@@ -1,18 +1,20 @@
 import React from 'react';
+import type { FormValues } from '@/types/forms';
 
-interface InputProps {
+// Тема: Generics в компонентах
+interface InputProps<T extends FormValues, K extends keyof T> {
   label: string;
-  field: string;
-  value: unknown;
+  field: K; // Теперь field может быть только ключом из T
+  value: T[K]; // Тип значения автоматически берется из T
   error?: string;
   type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'date';
-  onChange: (field: string, value: string) => void;
+  onChange: (field: K, value: string) => void; // field тоже типизирован
   placeholder?: string;
   disabled?: boolean;
   required?: boolean;
 }
 
-export function Input({
+export function Input<T extends FormValues, K extends keyof T>({
   label,
   field,
   value,
@@ -22,8 +24,8 @@ export function Input({
   placeholder,
   disabled = false,
   required = false,
-}: InputProps) {
-  const getInputValue = (val: unknown): string => {
+}: InputProps<T, K>) {
+  const getInputValue = (val: T[K]): string => {
     if (val === null || val === undefined) return '';
     if (val instanceof Date) return val.toISOString().split('T')[0];
     return String(val);
