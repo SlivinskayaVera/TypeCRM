@@ -4,7 +4,8 @@ import type { Permission } from '@/types/permissions';
 import { hasPermission } from '@/types/permissions';
 import { authApi } from '@/api/auth';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
-import { AuthContext } from '@/utils/roleGuards';
+import { AuthContext } from './AuthContextInstance';
+import { isAdmin } from '@/utils/roleGuards';
 
 // Тема: Interface для контекста
 export interface AuthContextType {
@@ -67,6 +68,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         } else {
           throw new Error('Неверный email или пароль');
         }
+      } catch (error) {
+        throw error instanceof Error ? error : new Error('Ошибка входа');
       } finally {
         setIsLoading(false);
       }
@@ -83,6 +86,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         const { password: _, ...publicUser } = user; // eslint-disable-line @typescript-eslint/no-unused-vars
         setUser(publicUser);
         setStoredUserId(user.id);
+      } catch (error) {
+        throw error instanceof Error ? error : new Error('Ошибка регистрации');
       } finally {
         setIsLoading(false);
       }
@@ -98,6 +103,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const checkPermission = useCallback(
     (permission: Permission): boolean => {
       if (!user) return false;
+
+      // Type guard сужает тип, если isAdmin вернет true
+      if (isAdmin(user)) {
+        // здесь TypeScript знает, что role точно 'admin'
+        return true; // админ имеет все права
+      }
+
       return hasPermission(user.role, permission);
     },
     [user],
