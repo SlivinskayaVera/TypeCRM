@@ -12,9 +12,7 @@ import { ProfilePage } from './pages/ProfilePage';
 import { AdminPage } from './pages/AdminPage';
 import { useAuth } from './hooks/useAuth';
 
-// TODO: нормальные типы для пропсов ⚠️
 function Navigation() {
-  // useAuth возвращает any — надо исправить!
   const { user, logout } = useAuth();
 
   // user может быть null, но мы не проверяем

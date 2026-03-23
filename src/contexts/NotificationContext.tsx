@@ -1,11 +1,11 @@
 import React, { createContext, useState, useContext } from 'react';
 
-// TODO: discriminated union ⚠️
+// TODO: discriminated union
 type Notification = {
   type: string; // Почему не union?
   message: string;
   duration?: number;
-  action?: any; // 🙈
+  action?: any;
 };
 
 const NotificationContext = createContext<any>(null);

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-// TODO: нормальные типы ⚠️
+// TODO: нормальные типы
 export function useUpload() {
   const [state, setState] = useState({
     status: 'idle',

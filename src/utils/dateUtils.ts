@@ -1,4 +1,4 @@
-// TODO: перегрузки и проверки ⚠️
+// TODO: перегрузки и проверки
 
 // Может упасть, если date невалидный
 export function formatDate(date: any) {
@@ -17,7 +17,7 @@ export function sortByDate(items: any[], getDate: any, ascending = true) {
     const dateB = new Date(getDate(b)).getTime();
 
     if (isNaN(dateA) || isNaN(dateB)) {
-      return 0; // Просто игнорируем ошибки 🤷
+      return 0; // Просто игнорируем ошибки
     }
 
     return ascending ? dateA - dateB : dateB - dateA;

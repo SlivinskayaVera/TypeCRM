@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-// TODO: дженерики ⚠️
+// TODO: дженерики
 export function useDebounce(value: any, delay: any) {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
